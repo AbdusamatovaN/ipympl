@@ -98,6 +98,50 @@ export class ToolbarView extends DOMWidgetView {
             this.toolbar.appendChild(button);
         }
 
+        //new in create_toolbar()
+        var dropdownContent = document.createElement("div");
+        dropdownContent.className = "dropdown-content";
+        dropdownContent.id = "myDropdown";
+        var link1 = document.createElement("a");
+        link1.textContent = "PDF";
+        link1.addEventListener(
+            'click',
+            this.toolbar_button_onclick("save_pdf")
+        );
+        var link2 = document.createElement("a");
+        link2.textContent = "SVG";
+        link2.addEventListener(
+            'click',
+            this.toolbar_button_onclick("save_svg")
+        );
+        var link3 = document.createElement("a");
+        link3.textContent = "PNG";
+        link3.addEventListener(
+            'click',
+            this.toolbar_button_onclick("save_png")
+        );
+        dropdownContent.appendChild(link1);
+        dropdownContent.appendChild(link2);
+        dropdownContent.appendChild(link3);
+        var dropdownContainer = document.createElement("div");
+        dropdownContainer.classList.add(
+                'jupyter-matplotlib-button',
+                'jupyter-widgets',
+                'jupyter-button'
+        );
+        dropdownContainer.className = "dropdown";
+        dropdownContainer.setAttribute('title', "Save the figure as");
+        const icon = document.createElement("i");
+        icon.classList.add('center', 'fa', 'fa-fw', 'fa-' + 'save');
+        dropdownContainer.appendChild(icon);
+        dropdownContainer.addEventListener(
+            "click", function() {
+             document.getElementById("myDropdown")!.classList.toggle("show");
+        });
+        dropdownContainer.appendChild(dropdownContent);
+        this.toolbar.appendChild(dropdownContainer);
+        //end
+
         this.set_position();
         this.set_buttons_style();
 
